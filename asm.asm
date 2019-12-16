@@ -7,6 +7,10 @@ MyCounter db 0
 i db 0h
 j db 0h
 sum db 0h
+MyName db 'g','o','k','s','e','l'
+MyName2 db 'G','O','K','S','E','L'
+toLower db 0,0,0,0,0,0
+index dq 0h
 
 .code
 Jelly proc 
@@ -74,7 +78,6 @@ GKS proc
 	ret
 GKS endp
 
-
 ;NESTED LOOPS
 WhileTest proc
 	lea rbx, i
@@ -113,9 +116,7 @@ doWhile proc
 	ret
 doWhile endp
 
-
 ; DO WHILE 2
-
 doWhile2 proc
 	lea rbx, i ; For Variable Address
 	mov i, 1h
@@ -125,4 +126,37 @@ doWhile2 proc
 		jle DO
 	ret
 doWhile2 endp
+
+nameConverter proc
+	lea rbx, MyName
+	lea rdx, toLower
+	mov i, 0
+	DO:
+		mov rax, [rbx]
+		sub rax, 32
+		mov byte ptr[rdx], al
+		inc rdx
+		inc rbx
+		inc i
+		cmp i, 6
+		jne DO
+	ret
+nameConverter endp
+
+nameConverter2 proc
+	lea rbx, MyName2
+	lea rcx, toLower
+	mov index, 0
+	add rbx, index
+	DO:
+		mov rax, [rbx]
+		add rax, 32
+		mov byte ptr[rcx], al
+		inc rcx
+		inc rbx
+		inc index
+		cmp index, 6
+		jne DO
+	ret
+nameConverter2 endp
 end
